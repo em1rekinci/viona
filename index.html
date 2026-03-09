@@ -101,6 +101,7 @@
   }
   .hero-title .accent { color: var(--gold); }
   .hero-title .outline {
+    display: block;
     color: var(--ink);
   }
   .hero::after {
@@ -329,15 +330,15 @@
     .nav-links { display: none; }
     .hamburger { display: flex; }
     section { padding: 60px 20px; }
-    .hero { padding: 0 20px; min-height: 100svh; display: flex; align-items: center; }
+    .hero { padding: 70px 20px 20px; min-height: 100svh; display: flex; align-items: center; }
     .hero-deco-ring, .hero-deco-v, .hero-stats { display: none; }
     .hero::after { display: none; }
     .hero-content { max-width: 100%; }
     .hero-badge { font-size: 9px; padding: 5px 12px; margin-bottom: 20px; letter-spacing: 1px; }
-    .hero-title { font-size: clamp(42px, 11vw, 64px); line-height: 1.05; }
-    .hero-subtitle { font-size: 15px; max-width: 100%; }
-    .hero-actions { flex-direction: column; align-items: flex-start; gap: 14px; margin-top: 28px; }
-    .btn-primary { width: 100%; text-align: center; padding: 16px; }
+    .hero-title { font-size: clamp(44px, 12vw, 64px); line-height: 1.05; }
+    .hero-subtitle { font-size: 15px; max-width: 100%; margin-top: 16px; }
+    .hero-actions { flex-direction: row; align-items: center; gap: 16px; margin-top: 28px; flex-wrap: wrap; }
+    .btn-primary { width: auto; text-align: center; padding: 14px 28px; }
     .section-title { font-size: clamp(26px, 7vw, 38px); }
     .skills-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
     .about-stats { gap: 24px; margin-top: 40px; }
@@ -398,7 +399,11 @@
   </div>
   <div class="hero-content">
     <div class="hero-badge">Dijital Ajans &amp; Web Çözümleri</div>
-    <h1 class="hero-title">Markaları<br><span class="accent">Dijitalde</span><br><span class="outline">İnşa Ediyoruz.</span></h1>
+    <h1 class="hero-title">
+      Markaları<br>
+      <span class="accent">Dijitalde</span>
+      <span class="outline">İnşa Ediyoruz.</span>
+    </h1>
     <p class="hero-subtitle">
       Kurumsal kimliğinizi yansıtan, hız ve kullanıcı deneyimine odaklanan
       profesyonel web siteleri tasarlıyor ve geliştiriyoruz.
