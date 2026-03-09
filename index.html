@@ -667,8 +667,8 @@
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = form.querySelector('.form-submit');
+    const originalHTML = btn.innerHTML;
     btn.innerHTML = 'Gönderiliyor...';
-    btn.disabled = true;
     try {
       const res = await fetch(form.action, {
         method: 'POST',
@@ -684,8 +684,7 @@
         alert('Bir hata oluştu, lütfen tekrar deneyin.');
       }
     } catch { alert('Bağlantı hatası, lütfen tekrar deneyin.'); }
-    btn.innerHTML = 'Mesaj Gönder <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L10 4M14 8L10 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
-    btn.disabled = false;
+    btn.innerHTML = originalHTML;
   });
 </script>
 </body>
