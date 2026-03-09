@@ -39,7 +39,11 @@
     border-bottom: 1px solid var(--border-dark);
   }
   .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .logo-wordmark { display: none; }
+  .logo-wordmark {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--ink);
+    letter-spacing: 3px; font-weight: 600;
+  }
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a {
     color: var(--ink-light); text-decoration: none;
@@ -388,7 +392,7 @@
       <path d="M4 7 L14 7 L26 38 L38 7 L48 7 L26 47 Z" stroke="#B8922A" stroke-width="2" fill="none"/>
       <path d="M11 7 L18 7 L26 30 L34 7 L41 7 L26 40 Z" stroke="#1A1612" stroke-width="1" fill="none" opacity="0.2"/>
     </svg>
-    <span class="logo-wordmark">VIONA</span>
+
   </a>
   <ul class="nav-links">
     <li><a href="#hakkimizda">Hakkımızda</a></li>
@@ -494,15 +498,25 @@
       <button class="filter-btn active" onclick="filterProjects('tümü', this)">Tümü</button>
       <button class="filter-btn" onclick="filterProjects('kurumsal', this)">Kurumsal</button>
       <button class="filter-btn" onclick="filterProjects('eglence', this)">Eğlence</button>
-      <button class="filter-btn" onclick="filterProjects('kat son', this)">Bireysel</button>
+      <button class="filter-btn" onclick="filterProjects('bireysel', this)">Bireysel</button>
     </div>
   </div>
 
   <div class="projects-grid" id="projectsGrid">
     <div class="project-card reveal" data-cat="kurumsal">
-      <div class="project-img" style="background:#1a1612; padding-top:56%; position:relative; overflow:hidden;">
-        <img src="https://kaderahsap-production.up.railway.app/static/images/cilali-masa.jpg" alt="Kader Office Furniture" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;">
-        <div class="project-overlay"><a href="#iletisim" class="overlay-btn">Detay Gör</a></div>
+      <div class="project-img" style="background:linear-gradient(135deg,#E2D9C8,#D4C9B0); padding-top:0; height:260px;">
+        <img src="https://kaderahsap-production.up.railway.app/static/images/cilali-masa.jpg" alt="Kader Office Furniture" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="project-img-placeholder" style="display:none; position:absolute; inset:0;">
+          <svg width="80" height="60" viewBox="0 0 80 60" fill="none">
+            <rect x="5" y="5" width="70" height="50" rx="4" stroke="rgba(184,146,42,0.4)" stroke-width="1.5"/>
+            <rect x="5" y="5" width="70" height="14" rx="4" fill="rgba(184,146,42,0.15)"/>
+            <circle cx="14" cy="12" r="3" fill="rgba(184,146,42,0.6)"/>
+            <rect x="14" y="26" width="22" height="22" rx="2" fill="rgba(184,146,42,0.1)"/>
+            <rect x="44" y="26" width="22" height="8" rx="2" fill="rgba(184,146,42,0.1)"/>
+            <rect x="44" y="38" width="16" height="4" rx="2" fill="rgba(184,146,42,0.07)"/>
+          </svg>
+        </div>
+        <div class="project-overlay"><a href="https://kaderahsap-production.up.railway.app/" target="_blank" class="overlay-btn">Siteye Git</a></div>
       </div>
       <div class="project-info">
         <div class="project-cat">Kurumsal</div>
@@ -512,17 +526,24 @@
       </div>
     </div>
 
-    <div class="project-card reveal" data-cat="eglence">
-      <div class="project-img" style="background:#111; padding-top:56%; position:relative; overflow:hidden;">
-        <img src="https://gagorganization.fun/static/images/hero-bg.jpg" alt="GAG Organization" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" onerror="this.style.display='none'">
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:28px;color:rgba(184,146,42,0.7);letter-spacing:4px;z-index:0;">GAG</div>
+    <div class="project-card reveal" data-cat="bireysel">
+      <div class="project-img" style="background:linear-gradient(135deg,#EDE6D8,#E2D9C8)">
+        <div class="project-img-placeholder">
+          <svg width="80" height="60" viewBox="0 0 80 60" fill="none">
+            <rect x="5" y="5" width="70" height="50" rx="4" stroke="rgba(184,146,42,0.4)" stroke-width="1.5"/>
+            <rect x="12" y="14" width="16" height="20" rx="2" fill="rgba(184,146,42,0.15)"/>
+            <rect x="32" y="14" width="16" height="20" rx="2" fill="rgba(184,146,42,0.1)"/>
+            <rect x="52" y="14" width="16" height="20" rx="2" fill="rgba(184,146,42,0.08)"/>
+            <rect x="20" y="40" width="40" height="8" rx="3" fill="rgba(184,146,42,0.2)"/>
+          </svg>
+        </div>
         <div class="project-overlay"><a href="#iletisim" class="overlay-btn">Detay Gör</a></div>
       </div>
       <div class="project-info">
-        <div class="project-cat">Eğlence</div>
-        <div class="project-name">GAG Organization</div>
-        <div class="project-desc">Organizasyon ve etkinlik yönetimine özel modern web platformu.</div>
-        <div class="project-tags"><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span></div>
+        <div class="project-cat">Kurumsal</div>
+        <div class="project-name">Turhanlar İnşaat Web Sitesi</div>
+        <div class="project-desc">Kurumsal kimliği güçlü, proje portföylü inşaat sektörü web sitesi.</div>
+        <div class="project-tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Stripe</span></div>
       </div>
     </div>
 
@@ -546,7 +567,7 @@
       </div>
     </div>
 
-    <div class="project-card reveal" data-cat="kurumsal">
+    <div class="project-card reveal" data-cat="eglence">
       <div class="project-img" style="background:linear-gradient(135deg,#EDE6D8,#DDD4C0)">
         <div class="project-img-placeholder">
           <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
@@ -555,12 +576,12 @@
             <circle cx="30" cy="30" r="4" fill="rgba(184,146,42,0.25)"/>
           </svg>
         </div>
-        <div class="project-overlay"><a href="#iletisim" class="overlay-btn">Detay Gör</a></div>
+        <div class="project-overlay"><a href="https://gagorganization.fun/" target="_blank" class="overlay-btn">Siteye Git</a></div>
       </div>
       <div class="project-info">
-        <div class="project-cat">Kurumsal</div>
-        <div class="project-name">Bi tane sallarız</div>
-        <div class="project-desc">sallama</div>
+        <div class="project-cat">Eğlence</div>
+        <div class="project-name">Gag Organization</div>
+        <div class="project-desc">Eğlenceli etkinliklerin tek adresi.</div>
         <div class="project-tags"><span class="tag">WordPress</span><span class="tag">SEO</span></div>
       </div>
     </div>
@@ -585,7 +606,7 @@
               <path d="M2 4L8 8.5L14 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
             </svg>
           </div>
-          <span>info@vionasoft.com</span>
+          <span><a href="mailto:info@vionasoft.com" style="color:inherit;text-decoration:none;">info@vionasoft.com</a></span>
         </div>
         <div class="contact-item">
           <div class="contact-icon">
@@ -643,7 +664,7 @@
   <p>Tasarım &amp; Geliştirme: <span>Viona Digital Agency</span></p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
     entries.forEach((e, i) => {
@@ -670,8 +691,12 @@
     btn.classList.add('active');
     document.querySelectorAll('.project-card').forEach(card => {
       const show = cat === 'tümü' || card.dataset.cat === cat;
-      card.style.display = show ? 'block' : 'none';
+      card.style.display = show ? '' : 'none';
     });
+    // Re-apply first-child span-2 logic for visible cards
+    const visibleCards = document.querySelectorAll('.project-card:not([style*="display: none"])');
+    document.querySelectorAll('.project-card').forEach(c => c.style.gridColumn = '');
+    if (visibleCards.length > 0) visibleCards[0].style.gridColumn = 'span 2';
   }
 
   const form = document.getElementById('contactForm');
@@ -700,4 +725,4 @@
   });
 </script>
 </body>
-</html>
+</html> 
