@@ -62,7 +62,6 @@
     min-height: 100vh;
     display: flex; align-items: center;
     padding: 0 60px;
-    padding-top: 120px;
     position: relative; overflow: hidden;
     background: var(--cream);
   }
@@ -96,7 +95,7 @@
   }
   .hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(72px, 11vw, 140px);
+    font-size: clamp(48px, 7vw, 88px);
     line-height: 1.02; font-weight: 700; color: var(--ink);
     opacity: 0; animation: fadeUp 0.9s forwards 0.5s;
   }
@@ -351,7 +350,7 @@
     .hero-content { max-width: 100%; }
     .hero-content { display: flex; flex-direction: column; justify-content: center; }
     .hero-badge { font-size: 9px; padding: 5px 12px; margin-bottom: 52px; margin-top: -60px; letter-spacing: 1px; }
-    .hero-title { font-size: clamp(44px, 11vw, 62px); line-height: 1.2; }
+    .hero-title { font-size: clamp(52px, 14vw, 80px); line-height: 1.2; }
     .hero-subtitle { font-size: 16px; max-width: 100%; margin-top: 44px; }
     .hero-actions { flex-direction: column; align-items: flex-start; gap: 20px; margin-top: 72px; }
     .btn-primary { width: 100%; text-align: center; padding: 18px; font-size: 16px; }
@@ -506,7 +505,7 @@
   <div class="projects-grid" id="projectsGrid">
     <div class="project-card reveal" data-cat="kurumsal">
       <div class="project-img" style="background:linear-gradient(135deg,#E2D9C8,#D4C9B0); padding-top:0; height:260px;">
-        <img src="https://kaderahsap-production.up.railway.app/static/images/cilali-masa.jpg" alt="Kader Office Furniture" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <img src="kader.png" alt="Kader Office Furniture" style="width:100%;height:100%;object-fit:cover;display:block;" >
         <div class="project-img-placeholder" style="display:none; position:absolute; inset:0;">
           <svg width="80" height="60" viewBox="0 0 80 60" fill="none">
             <rect x="5" y="5" width="70" height="50" rx="4" stroke="rgba(184,146,42,0.4)" stroke-width="1.5"/>
@@ -570,13 +569,7 @@
 
     <div class="project-card reveal" data-cat="eglence">
       <div class="project-img" style="background:linear-gradient(135deg,#EDE6D8,#DDD4C0)">
-        <div class="project-img-placeholder">
-          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-            <circle cx="30" cy="30" r="22" stroke="rgba(184,146,42,0.35)" stroke-width="1.5"/>
-            <path d="M18 30 Q24 18 30 30 Q36 42 42 30" stroke="rgba(184,146,42,0.6)" stroke-width="1.5" fill="none"/>
-            <circle cx="30" cy="30" r="4" fill="rgba(184,146,42,0.25)"/>
-          </svg>
-        </div>
+        <img src="gag.jpg" alt="Gag Organization" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
         <div class="project-overlay"><a href="https://gagorganization.fun/" target="_blank" class="overlay-btn">Siteye Git</a></div>
       </div>
       <div class="project-info">
@@ -721,9 +714,4 @@
         alert('Bir hata oluştu, lütfen tekrar deneyin.');
       }
     } catch { alert('Bağlantı hatası, lütfen tekrar deneyin.'); }
-    btn.innerHTML = 'Mesaj Gönder <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L10 4M14 8L10 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
-    btn.disabled = false;
-  });
-</script>
-</body>
-</html> 
+    btn.innerHTML = 'Mesaj
