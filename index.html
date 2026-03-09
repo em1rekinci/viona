@@ -246,6 +246,7 @@
     content: ''; position: absolute; bottom: -80px; left: 50%;
     transform: translateX(-50%); width: 600px; height: 300px;
     background: radial-gradient(ellipse, rgba(184,146,42,0.1) 0%, transparent 70%);
+    pointer-events: none;
   }
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
   .contact-info p { color: rgba(245,240,232,0.55); line-height: 1.8; font-size: 16px; margin: 20px 0 40px; }
@@ -264,7 +265,7 @@
     border-radius: 50%; display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; color: var(--gold-light);
   }
-  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 2; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-group { display: flex; flex-direction: column; gap: 8px; }
   .form-label { font-size: 12px; color: rgba(245,240,232,0.4); letter-spacing: 1px; text-transform: uppercase; }
