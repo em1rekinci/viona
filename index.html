@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viona — Dijital Ajans & Web Çözümleri</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:       #F5F0E8;
+    --cream-mid:   #EDE6D8;
+    --cream-dark:  #E2D9C8;
+    --ink:         #1A1612;
+    --ink-mid:     #2E2820;
+    --ink-light:   #5C5448;
+    --gold:        #B8922A;
+    --gold-light:  #D4A83C;
+    --gold-pale:   #F0E4C0;
+    --border:      rgba(184,146,42,0.2);
+    --border-dark: rgba(26,22,18,0.1);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 22px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-dark);
+  }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-wordmark {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--ink);
+    letter-spacing: 3px; font-weight: 600;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    color: var(--ink-light); text-decoration: none;
+    font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
+    transition: color 0.3s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--gold); transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 0 60px;
+    position: relative; overflow: hidden;
+    background: var(--cream);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 55% 55% at 75% 50%, rgba(184,146,42,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 5% 90%, rgba(184,146,42,0.05) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(184,146,42,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184,146,42,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 750px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); padding: 8px 18px;
+    border-radius: 30px; font-size: 12px; color: var(--gold);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px;
+    background: rgba(184,146,42,0.06);
+    opacity: 0; animation: fadeUp 0.8s forwards 0.3s;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--gold); border-radius: 50%;
+    box-shadow: 0 0 8px rgba(184,146,42,0.5);
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 7vw, 88px);
+    line-height: 1.05; font-weight: 700; color: var(--ink);
+    opacity: 0; animation: fadeUp 0.9s forwards 0.5s;
+  }
+  .hero-title .accent { color: var(--gold); }
+  .hero-title .outline {
+    display: block;
+    color: var(--ink);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; right: -60px; top: 50%;
+    transform: translateY(-50%);
+    width: 520px; height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,146,42,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-deco-ring {
+    position: absolute; right: 80px; top: 50%;
+    transform: translateY(-50%);
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    border: 1px solid rgba(184,146,42,0.12);
+    pointer-events: none;
+  }
+  .hero-deco-ring::before {
+    content: '';
+    position: absolute; inset: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(184,146,42,0.08);
+  }
+  .hero-deco-ring::after {
+    content: '';
+    position: absolute; inset: 70px;
+    border-radius: 50%;
+    border: 1px solid rgba(184,146,42,0.06);
+  }
+  .hero-deco-v {
+    position: absolute; right: 170px; top: 50%;
+    transform: translateY(-50%);
+    opacity: 0; animation: fadeUp 1s forwards 1.3s;
+  }
+  .hero-subtitle {
+    margin-top: 24px; font-size: 17px; color: var(--ink-light);
+    line-height: 1.7; max-width: 500px; font-weight: 300;
+    opacity: 0; animation: fadeUp 0.9s forwards 0.7s;
+  }
+  .hero-actions {
+    margin-top: 44px; display: flex; gap: 20px; align-items: center;
+    opacity: 0; animation: fadeUp 0.9s forwards 0.9s;
+  }
+  .btn-primary {
+    background: var(--ink); color: var(--cream);
+    padding: 15px 36px; border: none; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    font-weight: 600; letter-spacing: 0.5px; cursor: pointer;
+    text-decoration: none; transition: background 0.3s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold); transform: translateY(-2px); }
+  .btn-ghost {
+    color: var(--ink-light); font-size: 14px; text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+    transition: color 0.3s, gap 0.3s;
+  }
+  .btn-ghost:hover { color: var(--gold); gap: 14px; }
+  .hero-stats {
+    position: absolute; right: 60px; bottom: 80px;
+    display: flex; flex-direction: column; gap: 30px;
+    opacity: 0; animation: fadeLeft 0.9s forwards 1.1s;
+  }
+  .stat { text-align: right; border-right: 2px solid var(--gold); padding-right: 20px; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 36px; color: var(--gold); font-weight: 700; line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--ink-light); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+
+  /* SECTION BASE */
+  section { padding: 100px 60px; }
+  .section-label {
+    font-size: 11px; color: var(--gold); letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 50px); font-weight: 700; line-height: 1.15; color: var(--ink); }
+
+  /* HAKKIMIZDA */
+  .about { background: var(--cream-mid); position: relative; overflow: hidden; }
+  .about::before {
+    content: ''; position: absolute; top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(184,146,42,0.08) 0%, transparent 70%);
+  }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 32px; }
+  .skill-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: var(--ink-light);
+    padding: 12px 16px;
+    background: rgba(245,240,232,0.6); border: 1px solid var(--border-dark);
+    border-radius: 4px; transition: border-color 0.3s, color 0.3s;
+  }
+  .skill-item:hover { border-color: var(--gold); color: var(--ink); }
+  .skill-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+  .about-stats { display: flex; justify-content: center; gap: 60px; margin-top: 64px; flex-wrap: wrap; }
+  .about-stat { text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 16px; min-width: 120px; }
+
+  /* ÇALIŞMALARIMIZ */
+  .portfolio { background: var(--cream); }
+  .portfolio-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; }
+  .filter-tabs { display: flex; gap: 4px; }
+  .filter-btn {
+    background: none; border: 1px solid var(--border-dark);
+    color: var(--ink-light); padding: 8px 20px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    cursor: pointer; border-radius: 3px; transition: all 0.3s;
+  }
+  .filter-btn.active, .filter-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(184,146,42,0.05); }
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .project-card {
+    background: var(--cream-mid); border: 1px solid var(--border-dark);
+    overflow: hidden; position: relative; cursor: pointer;
+    transition: transform 0.4s ease, border-color 0.3s, box-shadow 0.3s;
+  }
+  .project-card:hover { transform: translateY(-6px); border-color: rgba(184,146,42,0.4); box-shadow: 0 12px 40px rgba(26,22,18,0.08); }
+  .project-card:first-child { grid-column: span 2; }
+  .project-img { width: 100%; padding-top: 56%; position: relative; overflow: hidden; background: var(--cream-dark); }
+  .project-img-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .project-overlay {
+    position: absolute; inset: 0; background: rgba(26,22,18,0.55);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .project-card:hover .project-overlay { opacity: 1; }
+  .overlay-btn {
+    background: var(--gold); color: var(--cream);
+    padding: 12px 28px; font-weight: 600; font-size: 13px;
+    text-decoration: none; border-radius: 3px;
+    transform: translateY(10px); transition: transform 0.3s;
+  }
+  .project-card:hover .overlay-btn { transform: translateY(0); }
+  .project-info { padding: 24px; }
+  .project-cat { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .project-name { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 8px; color: var(--ink); }
+  .project-desc { font-size: 14px; color: var(--ink-light); line-height: 1.6; }
+  .project-tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { font-size: 11px; padding: 4px 12px; border: 1px solid var(--border-dark); color: var(--ink-light); border-radius: 20px; letter-spacing: 0.5px; }
+
+  /* İLETİŞİM */
+  .contact { background: var(--ink); position: relative; overflow: hidden; }
+  .contact::after {
+    content: ''; position: absolute; bottom: -80px; left: 50%;
+    transform: translateX(-50%); width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(184,146,42,0.1) 0%, transparent 70%);
+  }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-info p { color: rgba(245,240,232,0.55); line-height: 1.8; font-size: 16px; margin: 20px 0 40px; }
+  .contact-info .section-title { color: var(--cream); }
+  .contact-info .section-label { color: var(--gold-light); }
+  .contact-info .section-label::before { background: var(--gold-light); }
+  .contact-details { display: flex; flex-direction: column; gap: 16px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px; background: rgba(245,240,232,0.05);
+    border: 1px solid rgba(245,240,232,0.1);
+    border-radius: 4px; color: rgba(245,240,232,0.6); font-size: 14px;
+  }
+  .contact-icon {
+    width: 36px; height: 36px; background: rgba(184,146,42,0.15);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: var(--gold-light);
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label { font-size: 12px; color: rgba(245,240,232,0.4); letter-spacing: 1px; text-transform: uppercase; }
+  .form-input, .form-textarea {
+    background: rgba(245,240,232,0.05); border: 1px solid rgba(245,240,232,0.12);
+    color: var(--cream); padding: 14px 18px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    border-radius: 4px; outline: none; transition: border-color 0.3s; width: 100%;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--gold-light); }
+  .form-textarea { resize: vertical; min-height: 130px; }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(245,240,232,0.25); }
+  .form-submit {
+    background: var(--gold); color: var(--ink); border: none;
+    padding: 16px 40px; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; font-size: 14px; border-radius: 4px; cursor: pointer;
+    align-self: flex-start; letter-spacing: 0.5px;
+    transition: background 0.3s, transform 0.2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .success-msg {
+    display: none; background: rgba(184,146,42,0.1);
+    border: 1px solid var(--gold); color: var(--gold-light);
+    padding: 14px 20px; border-radius: 4px; font-size: 14px;
+    align-items: center; gap: 10px; margin-bottom: 16px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink-mid); border-top: 1px solid rgba(245,240,232,0.06);
+    padding: 30px 60px; display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { color: rgba(245,240,232,0.3); font-size: 13px; }
+  footer span { color: var(--gold); }
+
+  /* ANİMASYONLAR */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeLeft { from { opacity:0; transform:translateX(30px); } to { opacity:1; transform:translateX(0); } }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .nav-links { gap: 20px; }
+    section { padding: 70px 24px; }
+    .hero { padding: 0 24px; min-height: 90vh; }
+    .hero-stats { display: none; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card:first-child { grid-column: span 1; }
+    .form-row { grid-template-columns: 1fr; }
+    .portfolio-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+    footer { flex-direction: column; gap: 10px; text-align: center; }
+  }
+  @media (max-width: 500px) { .skills-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#anasayfa" class="logo">
+    <svg width="30" height="30" viewBox="0 0 52 52" fill="none">
+      <path d="M4 7 L14 7 L26 38 L38 7 L48 7 L26 47 Z" stroke="#B8922A" stroke-width="2" fill="none"/>
+      <path d="M11 7 L18 7 L26 30 L34 7 L41 7 L26 40 Z" stroke="#1A1612" stroke-width="1" fill="none" opacity="0.2"/>
+    </svg>
+    <span class="logo-wordmark">VIONA</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hakkimizda">Hakkımızda</a></li>
+    <li><a href="#calismalarmiz">Çalışmalarımız</a></li>
+    <li><a href="#iletisim">İletişim</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="anasayfa">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-deco-ring"></div>
+  <div class="hero-deco-v">
+    <svg width="180" height="180" viewBox="0 0 52 52" fill="none">
+      <path d="M4 7 L14 7 L26 38 L38 7 L48 7 L26 47 Z" stroke="#B8922A" stroke-width="0.8" fill="none" opacity="0.18"/>
+      <path d="M11 7 L18 7 L26 30 L34 7 L41 7 L26 40 Z" stroke="#B8922A" stroke-width="0.5" fill="none" opacity="0.1"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">Dijital Ajans &amp; Web Çözümleri</div>
+    <h1 class="hero-title">
+      Markaları<br>
+      <span class="accent">Dijitalde</span>
+      <span class="outline">İnşa Ediyoruz.</span>
+    </h1>
+    <p class="hero-subtitle">
+      Kurumsal kimliğinizi yansıtan, hız ve kullanıcı deneyimine odaklanan
+      profesyonel web siteleri tasarlıyor ve geliştiriyoruz.
+    </p>
+    <div class="hero-actions">
+      <a href="#calismalarmiz" class="btn-primary">Çalışmalarımız</a>
+      <a href="#iletisim" class="btn-ghost">
+        İletişime Geçin
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Tamamlanan Proje</div></div>
+    <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Yıl Deneyim</div></div>
+    <div class="stat"><div class="stat-num">%100</div><div class="stat-label">Müşteri Memnuniyeti</div></div>
+  </div>
+</section>
+
+<!-- HAKKIMIZDA -->
+<section class="about" id="hakkimizda">
+  <div style="max-width:860px; margin:0 auto; text-align:center;" class="reveal">
+    <div class="section-label" style="justify-content:center;">Hakkımızda</div>
+    <h2 class="section-title">Markanız ile <span style="color:var(--gold)">Değer</span> Yaratıyoruz</h2>
+    <p style="margin-top:28px; color:var(--ink-light); font-size:17px; line-height:1.9; font-weight:300; max-width:680px; margin-left:auto; margin-right:auto;">
+      Küçük işletmelerden kurumsal markalara kadar onlarca web projesini hayata geçirdik.
+      Her projede temiz kod, hızlı yükleme ve güçlü kullanıcı deneyimini ön planda tutuyoruz.
+      Modern teknolojilerle geliştirdiğimiz siteler; mobil uyumlu, SEO dostu ve yönetimi
+      kolay yapıda teslim edilir. Projenizin başından sonuna kadar yanınızdayız.
+    </p>
+  </div>
+
+  <div class="skills-grid reveal" style="max-width:860px; margin:48px auto 0;">
+    <div class="skill-item"><span class="skill-dot"></span>HTML / CSS / JavaScript</div>
+    <div class="skill-item"><span class="skill-dot"></span>React / Next.js</div>
+    <div class="skill-item"><span class="skill-dot"></span>WordPress &amp; WooCommerce</div>
+    <div class="skill-item"><span class="skill-dot"></span>Mobil Uyumlu Tasarım</div>
+    <div class="skill-item"><span class="skill-dot"></span>SEO Optimizasyonu</div>
+    <div class="skill-item"><span class="skill-dot"></span>E-Ticaret Çözümleri</div>
+  </div>
+
+  <div class="about-stats reveal">
+    <div class="about-stat">
+      <div class="stat-num">50+</div>
+      <div class="stat-label" style="color:var(--ink-light)">Tamamlanan Proje</div>
+    </div>
+    <div class="about-stat">
+      <div class="stat-num">3+</div>
+      <div class="stat-label" style="color:var(--ink-light)">Yıl Deneyim</div>
+    </div>
+    <div class="about-stat">
+      <div class="stat-num">%100</div>
+      <div class="stat-label" style="color:var(--ink-light)">Müşteri Memnuniyeti</div>
+    </div>
+  </div>
+</section>
+
+<!-- ÇALIŞMALARIMIZ -->
+<section class="portfolio" id="calismalarmiz">
+  <div class="portfolio-header reveal">
+    <div>
+      <div class="section-label">Çalışmalarımız</div>
+      <h2 class="section-title">Seçilmiş <span style="color:var(--gold)">Projeler</span></h2>
+    </div>
+    <div class="filter-tabs">
+      <button class="filter-btn active" onclick="filterProjects('tümü', this)">Tümü</button>
+      <button class="filter-btn" onclick="filterProjects('kurumsal', this)">Kurumsal</button>
+      <button class="filter-btn" onclick="filterProjects('bireysel', this)">E-Ticaret</button>
+      <button class="filter-btn" onclick="filterProjects('kat son', this)">Bireysel</button>
+    </div>
+  </div>
+
+  <div class="projects-grid" id="projectsGrid">
+    <div class="project-card reveal" data-cat="kurumsal">
+      <div class="project-img" style="background:linear-gradient(135deg,#E2D9C8,#D4C9B0)">
+        <div class="project-img-placeholder">
+          <svg width="80" height="60" viewBox="0 0 80 60" fill="none">
+            <rect x="5" y="5" width="70" height="50" rx="4" stroke="rgba(184,146,42,0.4)" stroke-width="1.5"/>
+            <rect x="5" y="5" width="70" height="14" rx="4" fill="rgba(184,146,42,0.15)"/>
+            <circle cx="14" cy="12" r="3" fill="rgba(184,146,42,0.6)"/>
+            <rect x="14" y="26" width="22" height="22" rx="2" fill="rgba(184,146,42,0.1)"/>
+            <rect x="44" y="26" width="22" height="8" rx="2" fill="rgba(184,146,42,0.1)"/>
+            <rect x="44" y="38" width="16" height="4" rx="2" fill="rgba(184,146,42,0.07)"/>
+          </svg>
+        </div>
+        <div class="project-overlay"><a href="#iletisim" class="overlay-btn">Detay Gör</a></div>
+      </div>
+      <div class="project-info">
+        <div class="project-cat">Kurumsal</div>
+        <div class="project-name">Kader Office Furniture Web Sitesi</div>
+        <div class="project-desc">Şirket kimliğini yansıtan, proje portföylü kurumsal site.</div>
+        <div class="project-tags"><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">GSAP</span></div>
+      </div>
+    </div>
+
+    <div class="project-card reveal" data-cat="e-ticaret">
+      <div class="project-img" style="background:linear-gradient(135deg,#EDE6D8,#E2D9C8)">
+        <div class="project-img-placeholder">
+          <svg width="80" height="60" viewBox="0 0 80 60" fill="none">
+            <rect x="5" y="5" width="70" height="50" rx="4" stroke="rgba(184,146,42,0.4)" stroke-width="1.5"/>
+            <rect x="12" y="14" width="16" height="20" rx="2" fill="rgba(184,146,42,0.15)"/>
+            <rect x="32" y="14" width="16" height="20" rx="2" fill="rgba(184,146,42,0.1)"/>
+            <rect x="52" y="14" width="16" height="20" rx="2" fill="rgba(184,146,42,0.08)"/>
+            <rect x="20" y="40" width="40" height="8" rx="3" fill="rgba(184,146,42,0.2)"/>
+          </svg>
+        </div>
+        <div class="project-overlay"><a href="#iletisim" class="overlay-btn">Detay Gör</a></div>
+      </div>
+      <div class="project-info">
+        <div class="project-cat">Kurumsal</div>
+        <div class="project-name">Turhanlar İnşaat Web Sitesi</div>
+        <div class="project-desc">Kurumsal kimliği güçlü, proje portföylü inşaat sektörü web sitesi.</div>
+        <div class="project-tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Stripe</span></div>
+      </div>
+    </div>
+
+    <div class="project-card reveal" data-cat="landing">
+      <div class="project-img" style="background:linear-gradient(135deg,#E2D9C8,#D4C9B0)">
+        <div class="project-img-placeholder">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <rect x="5" y="15" width="50" height="35" rx="3" stroke="rgba(184,146,42,0.4)" stroke-width="1.5"/>
+            <rect x="5" y="15" width="50" height="12" rx="3" fill="rgba(184,146,42,0.12)"/>
+            <rect x="12" y="34" width="36" height="5" rx="2" fill="rgba(184,146,42,0.15)"/>
+            <rect x="18" y="42" width="24" height="4" rx="2" fill="rgba(184,146,42,0.08)"/>
+          </svg>
+        </div>
+        <div class="project-overlay"><a href="#iletisim" class="overlay-btn">Detay Gör</a></div>
+      </div>
+      <div class="project-info">
+        <div class="project-cat">Bireysel Portföy</div>
+        <div class="project-name">Serdar Reklam</div>
+        <div class="project-desc">20 Yıllık reklam sektörü deneyimi.</div>
+        <div class="project-tags"><span class="tag">Next.js</span><span class="tag">Framer Motion</span></div>
+      </div>
+    </div>
+
+    <div class="project-card reveal" data-cat="kurumsal">
+      <div class="project-img" style="background:linear-gradient(135deg,#EDE6D8,#DDD4C0)">
+        <div class="project-img-placeholder">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <circle cx="30" cy="30" r="22" stroke="rgba(184,146,42,0.35)" stroke-width="1.5"/>
+            <path d="M18 30 Q24 18 30 30 Q36 42 42 30" stroke="rgba(184,146,42,0.6)" stroke-width="1.5" fill="none"/>
+            <circle cx="30" cy="30" r="4" fill="rgba(184,146,42,0.25)"/>
+          </svg>
+        </div>
+        <div class="project-overlay"><a href="#iletisim" class="overlay-btn">Detay Gör</a></div>
+      </div>
+      <div class="project-info">
+        <div class="project-cat">Kurumsal</div>
+        <div class="project-name">Bi tane sallarız</div>
+        <div class="project-desc">sallama</div>
+        <div class="project-tags"><span class="tag">WordPress</span><span class="tag">SEO</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- İLETİŞİM -->
+<section class="contact" id="iletisim">
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <div class="section-label">İletişim</div>
+      <h2 class="section-title">Projenizi<br><span style="color:var(--gold-light)">Konuşalım</span></h2>
+      <p>
+        Yeni bir projeye başlamak, mevcut sitenizi yenilemek ya da sadece
+        fiyat almak için mesaj bırakın. En kısa sürede dönüş yapıyoruz.
+      </p>
+      <div class="contact-details">
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 4C2 3.45 2.45 3 3 3H13C13.55 3 14 3.45 14 4V12C14 12.55 13.55 13 13 13H3C2.45 13 2 12.55 2 12V4Z" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M2 4L8 8.5L14 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span>info@vionasoft.com</span>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 3C3 3 5 2 6 4C6.5 5 5.5 6 6 7C7 9 9 11 11 12C12 12.5 13 11.5 14 12C16 13 15 15 15 15C15 15 13 16 10 13C7 10 4 7 3 4C0 1 2 -1 3 3Z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span>+90 545 296 56 25</span>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="7" r="3" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M8 2C5.24 2 3 4.24 3 7C3 10.5 8 14 8 14C8 14 13 10.5 13 7C13 4.24 10.76 2 8 2Z" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+          </div>
+          <span>İstanbul, Türkiye</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div id="successMsg" class="success-msg">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M5.5 9L7.5 11L12.5 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Mesajınız alındı! En kısa sürede dönüş yapacağız.
+      </div>
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mwvrvbpp" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Adınız</label>
+            <input name="name" class="form-input" type="text" placeholder="Ahmet Yılmaz" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">E-posta</label>
+            <input name="email" class="form-input" type="email" placeholder="ahmet@firma.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Konu</label>
+          <input name="subject" class="form-input" type="text" placeholder="Proje hakkında bilgi almak istiyorum">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mesajınız</label>
+          <textarea name="message" class="form-textarea" placeholder="Projenizden ve bütçenizden bahsedebilirsiniz..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">
+          Mesaj Gönder
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 8H14M14 8L10 4M14 8L10 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>Viona</span>. Tüm hakları saklıdır.</p>
+  <p>Tasarım &amp; Geliştirme: <span>Viona Digital Agency</span></p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
+
+  function filterProjects(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.project-card').forEach(card => {
+      const show = cat === 'tümü' || card.dataset.cat === cat;
+      card.style.opacity = show ? '1' : '0.25';
+      card.style.pointerEvents = show ? 'auto' : 'none';
+    });
+  }
+
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = form.querySelector('.form-submit');
+    btn.innerHTML = 'Gönderiliyor...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        const s = document.getElementById('successMsg');
+        s.style.display = 'flex';
+        form.reset();
+        setTimeout(() => s.style.display = 'none', 6000);
+      } else {
+        alert('Bir hata oluştu, lütfen tekrar deneyin.');
+      }
+    } catch { alert('Bağlantı hatası, lütfen tekrar deneyin.'); }
+    btn.innerHTML = 'Mesaj Gönder <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L10 4M14 8L10 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+    btn.disabled = false;
+  });
+</script>
+</body>
+</html>
