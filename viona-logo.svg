@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Outer V -->
+  <path d="M20 30 L60 30 L100 140 L140 30 L180 30 L100 175 Z" stroke="#B8922A" stroke-width="6" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Inner V -->
+  <path d="M44 30 L68 30 L100 118 L132 30 L156 30 L100 152 Z" stroke="#B8922A" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round" opacity="0.35"/>
+</svg>
