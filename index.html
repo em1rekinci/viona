@@ -644,7 +644,7 @@
         </svg>
         Mesajınız alındı! En kısa sürede dönüş yapacağız.
       </div>
-      <form class="contact-form" id="contactForm" onsubmit="return false;">
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mwvrvbpp" method="POST">
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Adınız</label>
@@ -717,39 +717,23 @@
   const form = document.getElementById('contactForm');
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
-    e.stopPropagation();
     const btn = form.querySelector('.form-submit');
     const originalHTML = btn.innerHTML;
     btn.innerHTML = 'Gönderiliyor...';
-    btn.disabled = true;
-
-    const data = {
-      name: form.querySelector('[name="name"]').value,
-      email: form.querySelector('[name="email"]').value,
-      subject: form.querySelector('[name="subject"]').value,
-      message: form.querySelector('[name="message"]').value
-    };
-
     try {
-      const res = await fetch('https://formspree.io/f/mwvrvbpp', {
+      const res = await fetch(form.action, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(data)
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
       });
-      const json = await res.json();
       if (res.ok) {
-        document.getElementById('successMsg').style.display = 'flex';
-        form.style.display = 'none';
+        const s = document.getElementById('successMsg');
+        s.style.display = 'flex';
+        form.reset();
+        setTimeout(() => s.style.display = 'none', 6000);
       } else {
-        btn.innerHTML = originalHTML;
-        btn.disabled = false;
-        alert('Hata: ' + (json.error || 'Tekrar deneyin.'));
+        alert('Bir hata oluştu, lütfen tekrar deneyin.');
       }
-    } catch(err) {
-      btn.innerHTML = originalHTML;
-      btn.disabled = false;
-      alert('Bağlantı hatası, lütfen tekrar deneyin.');
-    }
-    return false;
+    } catch { alert('Bağlantı hatası, lütfen tekrar deneyin.'); }
+    btn.innerHTML = originalHTML;
   });
-s
