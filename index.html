@@ -605,7 +605,7 @@
               <path d="M2 4L8 8.5L14 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
             </svg>
           </div>
-          <span><a href="mailto:info@vionasoft.com" style="color:inherit;text-decoration:none;">info@vionasoft.com</a></span>
+          <span><a href="/cdn-cgi/l/email-protection#e58c8b838aa5938c8a8b84968a8391cb868a88" style="color:inherit;text-decoration:none;"><span class="__cf_email__" data-cfemail="660f08000926100f090807150900124805090b">[email&#160;protected]</span></a></span>
         </div>
         <div class="contact-item">
           <div class="contact-icon">
@@ -644,7 +644,7 @@
         </svg>
         Mesajınız alındı! En kısa sürede dönüş yapacağız.
       </div>
-      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mwvrvbpp" method="POST">
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mwvrvbpp">
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Adınız</label>
@@ -720,6 +720,7 @@
     const btn = form.querySelector('.form-submit');
     const originalHTML = btn.innerHTML;
     btn.innerHTML = 'Gönderiliyor...';
+    btn.disabled = true;
     try {
       const res = await fetch(form.action, {
         method: 'POST',
@@ -729,5 +730,17 @@
       if (res.ok) {
         const s = document.getElementById('successMsg');
         s.style.display = 'flex';
+        form.style.display = 'none';
         form.reset();
-        setTimeout(() => s.style.dis
+      } else {
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
+        alert('Bir hata oluştu, lütfen tekrar deneyin.');
+      }
+    } catch(err) {
+      btn.innerHTML = originalHTML;
+      btn.disabled = false;
+      alert('Bağlantı hatası, lütfen tekrar deneyin.');
+    }
+  });
+s
