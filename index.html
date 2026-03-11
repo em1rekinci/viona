@@ -680,7 +680,7 @@
   <p>Tasarım &amp; Geliştirme: <span>Viona Digital Agency</span></p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   document.body.classList.add('js-loaded');
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
@@ -715,32 +715,23 @@
   }
 
   const form = document.getElementById('contactForm');
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
-    e.stopImmediatePropagation();
-
     const btn = form.querySelector('.form-submit');
     const originalHTML = btn.innerHTML;
     btn.innerHTML = 'Gönderiliyor...';
     btn.disabled = true;
-
-    const params = new URLSearchParams();
-    params.append('name', form.querySelector('[name="name"]').value);
-    params.append('email', form.querySelector('[name="email"]').value);
-    params.append('subject', form.querySelector('[name="subject"]').value);
-    params.append('message', form.querySelector('[name="message"]').value);
-
-    fetch('https://formspree.io/f/mwvrvbpp', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString()
-    })
-    .then(function(res) {
+    try {
+      const res = await fetch('https://formspree.io/f/mwvrvbpp', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
       if (res.ok) {
         const s = document.getElementById('successMsg');
         s.style.display = 'flex';
         form.reset();
-        setTimeout(function() { s.style.display = 'none'; }, 6000);
+        setTimeout(() => s.style.display = 'none', 6000);
       } else {
         const s = document.getElementById('successMsg');
         s.style.display = 'flex';
@@ -748,22 +739,17 @@
         s.style.borderColor = '#c0392b';
         s.style.color = '#e74c3c';
         s.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M6 6L12 12M12 6L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Bir hata oluştu, lütfen tekrar deneyin.';
-        setTimeout(function() { s.style.display = 'none'; }, 6000);
+        setTimeout(() => s.style.display = 'none', 6000);
       }
-      btn.innerHTML = originalHTML;
-      btn.disabled = false;
-    })
-    .catch(function() {
+    } catch {
       const s = document.getElementById('successMsg');
       s.style.display = 'flex';
       s.style.background = 'rgba(180,40,40,0.1)';
       s.style.borderColor = '#c0392b';
       s.style.color = '#e74c3c';
       s.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M6 6L12 12M12 6L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Bağlantı hatası, lütfen tekrar deneyin.';
-      setTimeout(function() { s.style.display = 'none'; }, 6000);
-      btn.innerHTML = originalHTML;
-      btn.disabled = false;
-    });
-
-    return false;
-  }, true);
+      setTimeout(() => s.style.display = 'none', 6000);
+    }
+    btn.innerHTML = originalHTML;
+    btn.disabled = false;
+  });
