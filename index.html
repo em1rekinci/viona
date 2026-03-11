@@ -288,10 +288,25 @@
   }
   .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
   .success-msg {
-    display: none; background: rgba(184,146,42,0.1);
-    border: 1px solid var(--gold); color: var(--gold-light);
-    padding: 14px 20px; border-radius: 4px; font-size: 14px;
-    align-items: center; gap: 10px; margin-bottom: 16px;
+    display: none;
+    padding: 16px 22px; border-radius: 6px; font-size: 14px;
+    align-items: center; gap: 12px; margin-bottom: 16px;
+    font-weight: 500; letter-spacing: 0.2px;
+    animation: slideIn 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+  .success-msg.msg-success {
+    background: rgba(184,146,42,0.12);
+    border: 1px solid rgba(184,146,42,0.5);
+    color: var(--gold-light);
+  }
+  .success-msg.msg-error {
+    background: rgba(180,40,40,0.1);
+    border: 1px solid rgba(192,57,43,0.5);
+    color: #e74c3c;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   /* FOOTER */
@@ -304,6 +319,7 @@
 
   /* ANİMASYONLAR */
   @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   @keyframes fadeLeft { from { opacity:0; transform:translateX(30px); } to { opacity:1; transform:translateX(0); } }
   .js-loaded .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal { opacity: 1; transform: translateY(0); }
@@ -386,7 +402,7 @@
     <li><a href="#calismalarmiz">Çalışmalarımız</a></li>
     <li><a href="#iletisim">İletişim</a></li>
   </ul>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+  <button class="hamburger" id="hamburger">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -684,6 +700,20 @@
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   document.body.classList.add('js-loaded');
+
+  // Hamburger menü
+  document.getElementById('hamburger').addEventListener('click', function(e) {
+    e.stopPropagation();
+    this.classList.toggle('open');
+    document.getElementById('mobileMenu').classList.toggle('open');
+  });
+  document.getElementById('mobileMenu').addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+  document.addEventListener('click', function() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('mobileMenu').classList.remove('open');
+  });
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
     entries.forEach((e, i) => {
@@ -695,14 +725,24 @@
     document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
   }, 2000);
 
-  function toggleMenu() {
+  window.toggleMenu = function() {
     document.getElementById('hamburger').classList.toggle('open');
     document.getElementById('mobileMenu').classList.toggle('open');
   }
-  function closeMenu() {
+  window.closeMenu = function() {
     document.getElementById('hamburger').classList.remove('open');
     document.getElementById('mobileMenu').classList.remove('open');
   }
+
+  // Menü dışına tıklayınca kapat
+  document.addEventListener('click', function(e) {
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }
+  });
 
   function filterProjects(cat, btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -717,11 +757,24 @@
   }
 
   const form = document.getElementById('contactForm');
+
+  function showMsg(type, text) {
+    const s = document.getElementById('successMsg');
+    s.className = 'success-msg ' + (type === 'success' ? 'msg-success' : 'msg-error');
+    const icon = type === 'success'
+      ? '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 9L7.5 11L12.5 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M6 6L12 12M12 6L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+    s.innerHTML = icon + ' ' + text;
+    s.style.display = 'flex';
+    clearTimeout(s._timer);
+    s._timer = setTimeout(() => { s.style.display = 'none'; }, 6000);
+  }
+
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = form.querySelector('.form-submit');
     const originalHTML = btn.innerHTML;
-    btn.innerHTML = 'Gönderiliyor...';
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="animation:spin 0.8s linear infinite"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5" stroke-dasharray="20" stroke-dashoffset="5"/></svg> Gönderiliyor...';
     btn.disabled = true;
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
@@ -729,24 +782,20 @@
         body: new FormData(form),
         headers: { 'Accept': 'application/json' }
       });
-      if (res.ok) {
-        const s = document.getElementById('successMsg');
-        s.style.display = 'flex';
+      const data = await res.json();
+      if (res.ok && data.success) {
+        showMsg('success', 'Mesajınız alındı! En kısa sürede dönüş yapacağız.');
         form.reset();
-        setTimeout(() => s.style.display = 'none', 6000);
       } else {
-        const s = document.getElementById('successMsg');
-        s.style.display = 'flex';
-        s.style.background = 'rgba(180,40,40,0.1)';
-        s.style.borderColor = '#c0392b';
-        s.style.color = '#e74c3c';
-        s.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M6 6L12 12M12 6L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Bir hata oluştu, lütfen tekrar deneyin.';
-        setTimeout(() => s.style.display = 'none', 6000);
+        showMsg('error', 'Bir hata oluştu, lütfen tekrar deneyin.');
       }
     } catch {
-      const s = document.getElementById('successMsg');
-      s.style.display = 'flex';
-      s.style.background = 'rgba(180,40,40,0.1)';
-      s.style.borderColor = '#c0392b';
-      s.style.color = '#e74c3c';
-      s.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M6 6L12 12M12 6L6 12" strok
+      showMsg('error', 'Bağlantı hatası. İnternet bağlantınızı kontrol edip tekrar deneyin.');
+    } finally {
+      btn.innerHTML = originalHTML;
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
