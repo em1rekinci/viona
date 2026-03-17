@@ -703,7 +703,7 @@
   <p>Tasarım &amp; Geliştirme: <span>Viona Digital Agency</span></p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   document.body.classList.add('js-loaded');
 
   // Hamburger menü
@@ -788,10 +788,4 @@
         headers: { 'Accept': 'application/json' }
       });
       const data = await res.json();
-      if (res.ok && data.success) {
-        showMsg('success', 'Mesajınız alındı! En kısa sürede dönüş yapacağız.');
-        form.reset();
-      } else {
-        showMsg('error', 'Bir hata oluştu, lütfen tekrar deneyin.');
-      }
-    
+      if (res
