@@ -788,4 +788,19 @@
         headers: { 'Accept': 'application/json' }
       });
       const data = await res.json();
-      if (res
+      if (res.ok && data.success) {
+        showMsg('success', 'Mesajınız alındı! En kısa sürede dönüş yapacağız.');
+        form.reset();
+      } else {
+        showMsg('error', 'Bir hata oluştu. Lütfen tekrar deneyin.');
+      }
+    } catch (err) {
+      showMsg('error', 'Bağlantı hatası. Lütfen tekrar deneyin.');
+    } finally {
+      btn.innerHTML = originalHTML;
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
