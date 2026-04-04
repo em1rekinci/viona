@@ -662,11 +662,11 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>&copy; 2025 <span>Viona</span>. Tüm hakları saklıdır.</p>
-  <p>Tasarım &amp; Geliştirme: <span>Viona Digital Agency</span></p>
+  <p>&copy; 2026 <span>Viona</span>. Tüm hakları saklıdır.</p>
+  <p>Tasarım &amp; Geliştirme: <span>Vionasoft</span></p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   document.body.classList.add('js-loaded');
 
   // Hamburger menü
@@ -755,4 +755,15 @@
         showMsg('success', 'Mesajınız alındı! En kısa sürede dönüş yapacağız.');
         form.reset();
       } else {
-        showMsg('error', 'Bir hata oluştu. Lütfen tekra
+        showMsg('error', 'Bir hata oluştu. Lütfen tekrar deneyin.');
+      }
+    } catch (err) {
+      showMsg('error', 'Bağlantı hatası. Lütfen tekrar deneyin.');
+    } finally {
+      btn.innerHTML = originalHTML;
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
